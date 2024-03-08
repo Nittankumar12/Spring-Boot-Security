@@ -10,6 +10,10 @@ import org.springframework.security.config.annotation.web.configurers.AuthorizeH
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.config.annotation.web.configurers.SessionManagementConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -19,7 +23,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
 //        with Lambda
-        
+
         http
                 .csrf(customizer -> customizer.disable())
                 .authorizeHttpRequests(request -> request.anyRequest().authenticated())
@@ -63,5 +67,25 @@ public class SecurityConfig {
 //           http.httpBasic(Customizer.withDefaults());
 //            return http.build();
 
+
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService(){
+        UserDetails admin = User
+                                        .withDefaultPasswordEncoder()
+                                        .username("nittan")
+                                        .password("nittan")
+                                        .roles("admin")
+                                        .build();
+
+        UserDetails user = User
+                .withDefaultPasswordEncoder()
+                .username("amit")
+                .password("amit")
+                .roles("USER")
+                .build();
+
+        return new InMemoryUserDetailsManager(user,admin);
     }
 }
