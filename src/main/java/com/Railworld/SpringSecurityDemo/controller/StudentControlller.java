@@ -22,10 +22,10 @@ public class StudentControlller {
     ));
 
 
-    @GetMapping("csrf-token")
-    public CsrfToken getCsrfToken(HttpServletRequest request){
-        return (CsrfToken) request.getAttribute("_csrf");
-    }
+//    @GetMapping("csrf-token")
+//    public CsrfToken getCsrfToken(HttpServletRequest request){
+//        return (CsrfToken) request.getAttribute("_csrf");
+//    }
 
 
     @GetMapping("/students")
